@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Zebra Lab</title>
+<style>
+body{font-family:Arial,sans-serif;text-align:center;margin:0;padding:0;}
+#zebra{width:200px;height:200px;margin:50px auto;background:linear-gradient(45deg,black 25%,white 25%,white 50%,black 50%,black 75%,white 75%,white 100%);background-size:20px 20px;}
+button{padding:10px 20px;font-size:16px;}
+</style>
+</head>
+<body>
+<h1>Zebra Lab</h1>
+<div id="zebra"></div>
+<button id="toggle">Toggle Pattern</button>
+<script>
+const zebra=document.getElementById('zebra');
+const btn=document.getElementById('toggle');
+let dark=true;
+btn.addEventListener('click',()=>{
+  dark=!dark;
+  zebra.style.background=dark?'linear-gradient(45deg,black 25%,white 25%,white 50%,black 50%,black 75%,white 75%,white 100%)':'linear-gradient(45deg,white 25%,black 25%,black 50%,white 50%,white 75%,black 75%,black 100%)';
+});
+</script>
+</body>
+</html>
