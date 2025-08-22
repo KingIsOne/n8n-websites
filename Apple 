@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Apples Lab</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;padding:20px;background:#f9f9f9;color:#333}
+h1{text-align:center;color:#c0392b}
+ul{list-style-type:none;padding:0}
+li{background:#fff;border:1px solid #ddd;padding:10px;margin:5px 0;border-radius:5px}
+button{display:block;margin:20px auto;padding:10px 20px;background:#27ae60;color:#fff;border:none;border-radius:5px;cursor:pointer}
+button:hover{background:#2ecc71}
+#fact{margin-top:15px;font-style:italic;text-align:center}
+</style>
+</head>
+<body>
+<h1>Apples</h1>
+<p>Apples are one of the most popular fruits worldwide. They come in many varieties and are used in a wide range of dishes and drinks.</p>
+<ul>
+<li>Red Delicious – sweet and crisp.</li>
+<li>Granny Smith – tart and firm.</li>
+<li>Golden Delicious – mellow and sweet.</li>
+<li>Fuji – crunchy and juicy.</li>
+<li>Honeycrisp – exceptionally crisp.</li>
+</ul>
+<button id="factBtn">Show random apple fact</button>
+<p id="fact"></p>
+<script>
+const facts=[
+"Apples float in water because 25% of their volume is air.",
+"An apple tree can live up to 200 years.",
+"Apples are a member of the rose family.",
+"Apple trees bloom in early spring, often before the leaves appear.",
+"The world’s largest apple was grown in Poland and weighed 4.6 kg (10 lbs)."
+];
+document.getElementById('factBtn').addEventListener('click',()=>{
+const randomFact=facts[Math.floor(Math.random()*facts.length)];
+document.getElementById('fact').textContent=randomFact;
+});
+</script>
+</body>
+</html>
