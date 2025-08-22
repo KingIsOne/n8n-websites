@@ -1,0 +1,234 @@
+Below is a **single‑file lab page** that walks you through building a simple calculator web‑app.  
+All the HTML, CSS and JavaScript live in the same file, so you can copy‑paste it into a new file (e.g. `lab_calculator.html`) and open it in any browser.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lab: Build a Simple Calculator App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ----------------------------------------------------------
+   CSS – styles for the calculator layout & look
+   ---------------------------------------------------------- -->
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  h1 { margin-top: 2rem; }
+
+  /* Lab container */
+  .lab {
+    width: 100%;
+    max-width: 600px;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    margin: 1rem;
+  }
+
+  /* Calculator styles */
+  #calculator {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  #display {
+    grid-column: span 4;
+    height: 60px;
+    background: #222;
+    color: #fff;
+    font-size: 2rem;
+    text-align: right;
+    padding: 0.5rem;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+  button {
+    padding: 1rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: #e0e0e0;
+    transition: background 0.2s;
+  }
+  button:hover { background: #d5d5d5; }
+  button.operator { background: #ff9f43; color: #fff; }
+  button.operator:hover { background: #ff8f2f; }
+  button.equal { background: #26a69a; color: #fff; }
+  button.equal:hover { background: #219a8b; }
+  button.clear { background: #ef5350; color: #fff; }
+  button.clear:hover { background: #e53935; }
+
+  /* Small responsive tweak */
+  @media (max-width: 400px) {
+    button { font-size: 1rem; padding: 0.8rem; }
+    #display { font-size: 1.5rem; }
+  }
+</style>
+</head>
+
+<body>
+  <div class="lab">
+    <h1>Lab: Build a Simple Calculator App</h1>
+
+    <!-- ----------------------------------------------------------
+         Lab description
+         ---------------------------------------------------------- -->
+    <p>
+      In this lab you will create a small calculator that supports the four
+      basic arithmetic operations: addition, subtraction, multiplication,
+      and division.  The app will be built entirely with plain HTML,
+      CSS, and JavaScript – no external libraries.
+    </p>
+
+    <!-- ----------------------------------------------------------
+         Calculator UI
+         ---------------------------------------------------------- -->
+    <div id="calculator">
+      <input type="text" id="display" disabled value="0">
+      <!-- Row 1 -->
+      <button class="clear">C</button>
+      <button class="operator">/</button>
+      <button class="operator">*</button>
+      <button class="operator">-</button>
+      <!-- Row 2 -->
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button class="operator">+</button>
+      <!-- Row 3 -->
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button class="equal">=</button>
+      <!-- Row 4 -->
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button></button>
+      <!-- Row 5 -->
+      <button style="grid-column: span 2;">0</button>
+      <button>.</button>
+    </div>
+  </div>
+
+  <!-- ----------------------------------------------------------
+       JavaScript – calculator logic
+       ---------------------------------------------------------- -->
+  <script>
+    /* Grab the display element */
+    const display = document.getElementById('display');
+
+    /* Keep track of the current expression */
+    let currentExpression = '';
+
+    /* Helper function to update the display */
+    const updateDisplay = (value) => {
+      display.value = value || '0';
+    };
+
+    /* Reset the calculator */
+    const clear = () => {
+      currentExpression = '';
+      updateDisplay();
+    };
+
+    /* Evaluate the expression */
+    const evaluate = () => {
+      try {
+        /* Use eval for simplicity – in real apps you’d want a safer parser */
+        const result = eval(currentExpression);
+        updateDisplay(result);
+        currentExpression = result.toString(); // allow chaining
+      } catch (e) {
+        updateDisplay('Error');
+        currentExpression = '';
+      }
+    };
+
+    /* Handle button clicks */
+    document.querySelectorAll('#calculator button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.textContent.trim();
+
+        if (btn.classList.contains('clear')) {
+          clear();
+          return;
+        }
+
+        if (btn.classList.contains('equal')) {
+          evaluate();
+          return;
+        }
+
+        if (btn.classList.contains('operator')) {
+          if (currentExpression === '' && val !== '-') {
+            // Prevent starting with +, *, / (but allow negative numbers)
+            return;
+          }
+          currentExpression += val;
+          updateDisplay(currentExpression);
+          return;
+        }
+
+        /* Digit or decimal point */
+        currentExpression += val;
+        updateDisplay(currentExpression);
+      });
+    });
+
+    /* Optional: allow keyboard input */
+    document.addEventListener('keydown', (e) => {
+      const key = e.key;
+      if (/\d/.test(key) || key === '.') {
+        currentExpression += key;
+        updateDisplay(currentExpression);
+      } else if (['+', '-', '*', '/'].includes(key)) {
+        currentExpression += key;
+        updateDisplay(currentExpression);
+      } else if (key === 'Enter') {
+        evaluate();
+      } else if (key === 'Backspace') {
+        currentExpression = currentExpression.slice(0, -1);
+        updateDisplay(currentExpression);
+      } else if (key === 'Delete') {
+        clear();
+      }
+    });
+  </script>
+</body>
+</html>
+```
+
+### How to use the lab
+
+1. **Open the file**  
+   Save the code above to a file named `lab_calculator.html`.
+
+2. **Run the app**  
+   Double‑click the file or open it in your browser.
+
+3. **Try it out**  
+   • Click the number and operator buttons.  
+   • Press **C** to clear.  
+   • Press **=** (or the *Enter* key) to evaluate the expression.  
+   • You can also type numbers/operators directly from the keyboard.
+
+4. **Challenge (optional)**  
+   - Add support for parentheses `(` and `)`.  
+   - Implement a history panel that shows previous calculations.  
+   - Replace `eval()` with a safer parsing algorithm to avoid code injection.
+
+Happy coding!
