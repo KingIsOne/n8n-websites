@@ -1,1 +1,37 @@
-tiger_lab.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NASA Lab</title>
+<style>
+body {font-family: Arial, sans-serif; background: #111; color: #fff; text-align: center; margin:0; padding:0;}
+header {background:#0a0a0a; padding:20px;}
+header h1 {margin:0; font-size:2rem;}
+main {padding:20px;}
+#nasa-logo {width:200px;}
+button {background:#ff0; color:#111; border:none; padding:10px 20px; font-size:1rem; cursor:pointer; border-radius:5px;}
+button:hover {background:#ff6;}
+footer {background:#0a0a0a; padding:10px; font-size:0.8rem;}
+</style>
+</head>
+<body>
+<header>
+<h1>NASA Lab Page</h1>
+</header>
+<main>
+<img id="nasa-logo" src="https://www.nasa.gov/sites/default/files/thumbnails/image/nasa-logo-web-rgb.png" alt="NASA Logo">
+<p>Welcome to the NASA laboratory page. Explore the wonders of space.</p>
+<button id="infoBtn">Show Mission Info</button>
+<p id="missionInfo"></p>
+</main>
+<footer>
+© 2025 NASA
+</footer>
+<script>
+document.getElementById('infoBtn').addEventListener('click', function(){
+var info=document.getElementById('missionInfo');
+info.textContent='NASA missions include the Apollo program, the Space Shuttle, and the International Space Station.';
+});
+</script>
+</body>
+</html>
